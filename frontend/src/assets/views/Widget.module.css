@@ -1,0 +1,128 @@
+.widgets{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.widget{
+    margin: 1em 0;
+    padding: 0.5em;
+    height: fit-content;
+    width: max-content;
+    background: rgba(255, 255, 255, 0.443);
+    border-radius: 16px;
+    box-shadow: -6px 4px 16px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(3.6px);
+    -webkit-backdrop-filter: blur(3.6px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    display: grid;
+    font-size: smaller;
+}
+
+.box{
+    border-radius: 0.5em;
+    min-width: 88%;
+}
+
+.circle {
+    border-radius: 50%;
+    width: 105px;
+    height: 105px;
+}
+
+.heading{
+    margin: 0.2em 0 0 0;
+}
+
+.breakTag{
+    margin: 3px;
+}
+
+.list{
+    padding: 0;
+    margin: 0;
+}
+
+.showIcon{
+    align-self: end;
+    background-color: rgba(255, 255, 255, 0.278);
+    border-radius: 10em;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    z-index: 1;
+    padding: 1em;
+}
+
+.icons {
+    align-self: start;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.icons > * {
+    background-color: rgba(255, 255, 255, 0.478);
+    border-radius: 10em;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    z-index: 1;
+    padding: 1em;
+
+}
+
+
+@media screen and (min-width: 768px) {
+  
+  .widgets{
+    overflow: visible;
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+    .widget{
+        margin: 0.5em;
+        padding: 0.5em;
+        display: grid;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 3px 7px 0px;
+    }
+
+    .widgets{
+        flex-direction: row;
+        overflow-x: auto;
+    }
+    .box{
+        min-width: unset;
+    }
+
+    .widget ul {
+        list-style: none;
+    }
+
+    .showIcon{
+        box-shadow: none;
+        align-self: flex-start;
+    }
+
+    .widgetBar{
+        display: flex;
+        flex-direction: row-reverse ;
+        align-items: center;
+        justify-content: space-around;
+        overflow-y: hidden;
+        padding: 0.8em;
+        margin: 0 0.2em;
+    }
+
+    .widgetBar > * {
+        padding: 3px;
+    }
+
+    .icons {
+        width: auto;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+
+    }
+}

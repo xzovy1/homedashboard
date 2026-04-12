@@ -1,0 +1,94 @@
+.header{
+    display: grid;
+    grid-template-columns:  2fr 1fr;
+    width: 100%;
+    justify-self: center;
+    align-items: center;
+    justify-content: space-evenly;
+}   
+
+.header form {
+    width: fit-content;
+    justify-self: center;
+}
+
+.header button {
+    padding: 0;
+    background-color: transparent;
+}
+
+.body{
+    justify-self: center;
+    border-radius: 1em;
+    max-height: 97%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.carousel {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  display: flex;
+  gap: 4vw;
+  padding: 0;
+  margin: 0;
+  scroll-marker-group: after;
+}
+
+.carousel::scroll-marker-group {
+  position: absolute;
+  bottom: 1%;
+  position-anchor: --hero-carousel;
+  top: calc(anchor(bottom) - 70px);
+  justify-self: anchor-center;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-content: center;
+  align-items: center;
+  gap: 13px;
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+
+.slideItem {
+    list-style-type: none;
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+}
+
+.slideItem::scroll-marker {
+  content: attr(data-accName);
+  display: block;
+  width: 7px;
+  height: 7px;
+  background-color: transparent;
+  border: 2px solid rgba(0, 0, 0, 0.419);
+  border-radius: 50%;
+  overflow: hidden;
+  text-indent: 16px;
+}
+
+.slideItem::scroll-marker:target-current {
+  background-color: rgba(0, 0, 0, 0.543);
+  width: 13px;
+  height: 13px;
+}
+
+
+ @media screen and (max-width: 600px) {
+    .header{
+        padding-top: 0.5em;
+        margin: 0;
+    }
+    .body{
+        max-height: 90%;
+    }
+ }

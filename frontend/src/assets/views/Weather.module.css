@@ -1,0 +1,77 @@
+.highLow{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: x-small;
+}
+.highLow div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+}
+
+.currentTemp {
+    font-weight: bold;
+    font-size: medium;
+}
+
+.highLow * {
+    padding: 0.1em;
+    font-size: x-small;
+    width: fit-content;
+}
+
+.updateTime{
+    font-size: xx-small;
+    width: fit-content;
+    justify-self: center;
+}
+
+.feelsLike{
+    font-size: xx-small;
+}
+
+.pressure, .pressureWarning{
+    font-size: xx-small;
+}
+
+.pressureWarning, .error {
+    color: red;
+}
+
+.error{
+    padding: 2em 0em;
+}
+
+.weatherApp{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 2fr;
+    gap: 1em;
+    padding: 10px;
+}
+
+.weatherCard{
+    background-color: rgba(255, 255, 255, 0.183);
+    border-radius: 1em;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.temperatures{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 6em;
+    margin-bottom: 2em;
+}
+
+ @media screen and (max-width: 600px) {
+    .weatherApp{
+        grid-template-columns: 1fr;
+    }
+ }

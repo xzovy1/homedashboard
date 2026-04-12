@@ -1,0 +1,58 @@
+.newMeal{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    justify-self: center;
+    width: min-content;
+    margin: 0em 0 0 1em;
+}
+
+.newTaskInput {
+    grid-column: 2;
+}
+
+.meals {
+    max-height: clamp(200px, 50vh, 400px);
+    overflow-y: auto;
+    display: grid;
+}
+
+.newMeal button{
+    grid-column: 1/2;
+    margin: 0;
+}
+
+.mealInfo{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.mealItem{  
+    padding: 0.5em;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    width: 90%;
+}
+
+.mealItem > svg {
+    padding: 0.5em;
+}
+
+.fontAwesome:hover {
+    cursor: pointer;
+}
+
+.button svg {
+    height: max-content;
+}
+
+ @media screen and (max-width: 600px) {
+    .newTask{
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0.3em;
+    }
+    
+ }
