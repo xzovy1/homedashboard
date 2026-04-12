@@ -55,7 +55,6 @@ async function main() {
   console.log(process.env.NODE_ENV);
   console.log("seeding...");
   await seedGroceries();
-  await createDummyItems(20);
   await seedTodo();
   console.log("done");
 }
