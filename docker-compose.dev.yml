@@ -1,12 +1,12 @@
 services:
   app:
-    image: ghcr.io/xzovy1/homedashboard:latest
+    build: .
     ports:
       - "5500:5500"
     env_file:
       - ./backend/.env
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
     restart: unless-stopped
   db:
     image: postgres:16-alpine
