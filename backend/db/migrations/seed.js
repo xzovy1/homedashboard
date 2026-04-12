@@ -50,7 +50,7 @@ const seedTodo = async () => {
 const databaseUrl =
   process.env.NODE_ENV === "test"
     ? process.env.TEST_DB_URL
-    : process.env.DB_URL;
+    : process.env.DATABASE_URL;
 async function main() {
   console.log(process.env.NODE_ENV);
   console.log("seeding...");
