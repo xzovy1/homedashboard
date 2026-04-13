@@ -10,7 +10,7 @@ const Toolbox = () => {
     // },[])
     return (
         <div >
-            <img src={""} alt="wifiqr" style={{borderRadius: "1em", margin: "1em"}}/>
+            <img src={null} alt="wifiqr" style={{borderRadius: "1em", margin: "1em"}}/>
         </div>
     )
 }
