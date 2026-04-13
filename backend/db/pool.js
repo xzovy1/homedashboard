@@ -16,4 +16,7 @@ const pool = new Pool({
   database: process.env.DB_NAME,
 });
 
-module.exports = process.env.NODE_ENV === "test" || "dev" ? testPool : pool;
+module.exports =
+  process.env.NODE_ENV === "test" || process.env.NODE_ENV === "dev"
+    ? testPool
+    : pool;
