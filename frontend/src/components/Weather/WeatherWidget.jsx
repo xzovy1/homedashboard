@@ -12,9 +12,16 @@ import { WEATHER_URL } from "./Weather";
 export const WeatherWidget = ({ apiUrl = WEATHER_URL, refreshInterval = 1 * 60 * 60 * 1000, setWidgetComponentName }) => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    const { weatherData, setWeatherData } = useContext(AppContext);
+    const { weatherData, setWeatherData, theme, setTheme } = useContext(AppContext);
 
-    
+    const calculateTime = (data) => {
+        const sunset = data.forecast.forecastday[0].astro.sunset.slice(0, 2);
+        if(new Date().getHours() - parseInt(sunset[0] + 12) >= 0){
+            setTheme('dark');
+        }else {
+            setTheme('light');
+        }
+    }
 
     const fetchWeather = useCallback(async () => {
         try {
@@ -23,6 +30,7 @@ export const WeatherWidget = ({ apiUrl = WEATHER_URL, refreshInterval = 1 * 60 *
             const data = await response.json();
             data.lastFetch = new Date().toLocaleTimeString()
             setWeatherData(data);
+            calculateTime(data);
             setError(null);
         } catch (e) {
             setError(e);

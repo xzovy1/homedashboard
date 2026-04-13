@@ -7,13 +7,13 @@ import widgetStyles from "../assets/views/Widget.module.css"
 import { useRef } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEyeSlash, faEye, faToolbox, faGear, faMap } from "@fortawesome/free-solid-svg-icons";
+import { faEyeSlash, faEye, faToolbox, faBagShopping } from "@fortawesome/free-solid-svg-icons";
 import { focusComponent } from "../utils/focusComponent";
 
 
 export function focusCarouselWidget (){
     const carouselChildren = document.querySelector("#carousel").children;
-    carouselChildren[2].scrollIntoView({
+    carouselChildren[0].scrollIntoView({
         behaviour: 'smooth',
         block: "nearest",
         inline: "center"
@@ -47,7 +47,7 @@ const WidgetBar = ({setWidgetBar, widgetBarStatus, setWidgetComponentName}) => {
                 <div className={widgetStyles.icons}>
                     <FontAwesomeIcon icon={faEyeSlash} onClick={()=> {localStorage.setItem("widgetBarStatus", false); setWidgetBar(false); }} className={widgetStyles.hideIcon}/>
                     <FontAwesomeIcon icon={faToolbox} onClick={() => {focusComponent(setWidgetComponentName, "Toolbox"); focusCarouselWidget();}}/>
-                    {/* <FontAwesomeIcon icon={faGear} /> future use settings like upload custom background images */}
+                    <FontAwesomeIcon icon={faBagShopping} onClick={() => {focusComponent(setWidgetComponentName, "Groceries"); focusCarouselWidget();}}/>
                 </div>
             </>
             :  <FontAwesomeIcon icon={faEye} onClick={() => {localStorage.setItem("widgetBarStatus", true); setWidgetBar(true); }} className={`${widgetStyles.showIcon} widgetBar`} data-testid="widgetBar"/> 

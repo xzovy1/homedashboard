@@ -10,12 +10,11 @@
     padding: 0.5em;
     height: fit-content;
     width: max-content;
-    background: rgba(255, 255, 255, 0.443);
+    background: var(--background);
     border-radius: 16px;
     box-shadow: -6px 4px 16px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(3.6px);
     -webkit-backdrop-filter: blur(3.6px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
     display: grid;
     font-size: smaller;
 }
@@ -46,7 +45,7 @@
 
 .showIcon{
     align-self: end;
-    background-color: rgba(255, 255, 255, 0.278);
+    background: var(--background);
     border-radius: 10em;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     z-index: 1;
@@ -62,7 +61,7 @@
 }
 
 .icons > * {
-    background-color: rgba(255, 255, 255, 0.478);
+    background: var(--background);
     border-radius: 10em;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     z-index: 1;

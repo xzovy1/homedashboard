@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { AppContext } from './contexts/AppContext';
 import './App.css'
 import Hero from './components/Hero';
@@ -9,6 +9,7 @@ import Weather from './components/Weather/Weather';
 import WidgetBar from './components/WidgetBar';
 import { DEFAULT_WEATHER } from './components/Weather/Weather';
 import Toolbox from './components/Toolbox';
+import Groceries from './components/Grocery/Groceries';
 
 function App() {
   //use component references which maps component names to their function references. 
@@ -18,7 +19,8 @@ function App() {
     "To Do": Todo,
     "Meal Plan": MealPlan,
     Weather: Weather,
-    "Toolbox": Toolbox
+    "Toolbox": Toolbox,
+    Groceries: Groceries
   };
   
   const [widgetComponentName, setWidgetComponentName] = useState("To Do");
@@ -27,16 +29,32 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [meals, setMeals] = useState([]);
   const [weatherData, setWeatherData] = useState(DEFAULT_WEATHER);
+  const [theme, setTheme] = useState("light");
 
-  const [widgetBarStatus, setWidgetBar] = useState(true);
-  
   const colorSchemes = {
     sunrise: "linear-gradient(140deg, rgba(255, 197, 167, 1) 0%, rgb(255 193 192) 50%, rgb(255 248 184) 100%)",
     middayClear: "inear-gradient(140deg, #82C3FF 0%, #BFE2FF 50%, #E0F4FF 100%)",
-    midnight: "linear-gradient(180deg, #0e0252 0%, #6d192e 50%, #3c1200 100%)",
+    midnight: "linear-gradient(180deg, #0e0252 0%, #852b5e 50%, #6a1e0d 100%)",
     goldenHour: "linear-gradient(140deg, #FF9E6A 0%, #FFD07F 50%, #FEE89E 100%)",
     sunset: "linear-gradient(140deg, #6248FF 0%, #CF5C78 50%, #FF9E75 100%)"
   }
+
+  useEffect(() => {
+    document.body.dataset.theme = theme;
+    if(theme === 'light'){
+      document.body.style.background = colorSchemes.sunrise;
+      document.body.style.color = "rgb(30, 30, 30)";
+    }
+    if(theme ==='dark'){
+      document.body.style.background = colorSchemes.midnight;
+      document.body.style.color = "rgb(238, 238, 238)";
+    }
+  }, [theme]);
+
+
+  const [widgetBarStatus, setWidgetBar] = useState(true);
+  
+
 
   useEffect(()=>{
     //local storage
@@ -50,7 +68,7 @@ function App() {
   },[widgetBarStatus])
   
   return (  
-      <AppContext value={{tasks, setTasks, meals, setMeals, weatherData, setWeatherData}}>
+      <AppContext value={{tasks, setTasks, meals, setMeals, weatherData, setWeatherData, theme, setTheme}}>
         <WidgetBar widgetBarStatus={widgetBarStatus} setWidgetBar={setWidgetBar} setWidgetComponentName={setWidgetComponentName}/>
         <Hero WidgetContent={WidgetContent} />
       </AppContext>
