@@ -24,7 +24,7 @@ function App() {
     Groceries: Groceries
   };
   
-  const [widgetComponentName, setWidgetComponentName] = useState("To Do");
+  const [widgetComponentName, setWidgetComponentName] = useState(Groceries);
   const FocusedComponent = widgetComponentMap[widgetComponentName];
   
   const [tasks, setTasks] = useState([]);
