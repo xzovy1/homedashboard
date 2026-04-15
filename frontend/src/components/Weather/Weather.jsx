@@ -58,7 +58,6 @@ const TemperatureCard = ({title, data}) => {
 }
 
 const Graph = ({title, data}) => {
-    console.log(data)
     return (
         <div className={classes.weatherCard}> 
             <div><strong>{title}</strong></div>

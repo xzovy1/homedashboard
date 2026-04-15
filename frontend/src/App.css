@@ -1,5 +1,8 @@
 :root{
- --background: rgba(255, 255, 255, 0.13);
+ --background: rgba(255, 255, 255, 0.43);
+ --background-dark: rgba(206, 206, 206, 0.13);
+ --light-bg: linear-gradient(140deg, rgba(255, 197, 167, 1) 0%, rgb(255 193 192) 50%, rgb(255 248 184) 100%);
+ --dark-bg: linear-gradient(180deg, #0e0252 0%, #852b5e 50%, #6a1e0d 100%);
 }
 
 body{
