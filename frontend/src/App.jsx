@@ -10,6 +10,7 @@ import WidgetBar from './components/WidgetBar';
 import { DEFAULT_WEATHER } from './components/Weather/Weather';
 import Toolbox from './components/Toolbox';
 import Groceries from './components/Grocery/Groceries';
+import Calendar from "./components/Calendar"
 
 function App() {
   //use component references which maps component names to their function references. 
@@ -24,38 +25,28 @@ function App() {
   };
   
   const [widgetComponentName, setWidgetComponentName] = useState("To Do");
-  const WidgetContent = widgetComponentMap[widgetComponentName];
+  const FocusedComponent = widgetComponentMap[widgetComponentName];
   
   const [tasks, setTasks] = useState([]);
   const [meals, setMeals] = useState([]);
   const [weatherData, setWeatherData] = useState(DEFAULT_WEATHER);
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState("sunrise");
 
   const colorSchemes = {
     sunrise: "linear-gradient(140deg, rgba(255, 197, 167, 1) 0%, rgb(255 193 192) 50%, rgb(255 248 184) 100%)",
     middayClear: "inear-gradient(140deg, #82C3FF 0%, #BFE2FF 50%, #E0F4FF 100%)",
-    midnight: "linear-gradient(180deg, #0e0252 0%, #852b5e 50%, #6a1e0d 100%)",
     goldenHour: "linear-gradient(140deg, #FF9E6A 0%, #FFD07F 50%, #FEE89E 100%)",
-    sunset: "linear-gradient(140deg, #6248FF 0%, #CF5C78 50%, #FF9E75 100%)"
+    sunset: "linear-gradient(140deg, #6248FF 0%, #CF5C78 50%, #FF9E75 100%)",
+    midnight: "linear-gradient(180deg, #0e0252 0%, #3e1245 50%, #390722 100%)",
   }
-
+  
   useEffect(() => {
     document.body.dataset.theme = theme;
-    if(theme === 'light'){
-      document.body.style.background = colorSchemes.sunrise;
-      document.body.style.color = "rgb(30, 30, 30)";
-    }
-    if(theme ==='dark'){
-      document.body.style.background = colorSchemes.midnight;
-      document.body.style.color = "rgb(238, 238, 238)";
-    }
+    document.body.style.background = colorSchemes[`${theme}`];
   }, [theme]);
-
 
   const [widgetBarStatus, setWidgetBar] = useState(true);
   
-
-
   useEffect(()=>{
     //local storage
     const widgetBarLS = JSON.parse(localStorage.getItem("widgetBarStatus"))  
@@ -70,7 +61,10 @@ function App() {
   return (  
       <AppContext value={{tasks, setTasks, meals, setMeals, weatherData, setWeatherData, theme, setTheme}}>
         <WidgetBar widgetBarStatus={widgetBarStatus} setWidgetBar={setWidgetBar} setWidgetComponentName={setWidgetComponentName}/>
-        <Hero WidgetContent={WidgetContent} />
+        <Hero>
+          <FocusedComponent />
+          <Calendar />
+        </Hero>
       </AppContext>
   )
 }
