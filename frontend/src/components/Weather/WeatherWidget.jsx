@@ -12,17 +12,16 @@ export const WeatherWidget = ({ apiUrl = WEATHER_URL, refreshInterval = 1 * 60 *
     const [loading, setLoading] = useState(true);
     const { weatherData, setWeatherData, theme, setTheme } = useContext(AppContext);
 
-    const handleTheme = (sunrise, sunset) => {
+    const handleTheme = (sunrise, sunset, hour) => {
         const formatTime = timeStr => parseInt(timeStr.slice(0,2));
         sunrise = formatTime(sunrise);
         // weather api uses 12 hour clock
         sunset = formatTime(sunset) + 12;
-        setTheme("midnight")
-        const hour = new Date().getHours();
+        
         if (hour >= sunrise && hour <= 11) {
             setTheme("sunrise");
         } else if (hour > 11 && hour <= 16) {
-            setTheme("goldenhour");
+            setTheme("middayClear");
         } else if (hour >= sunset && hour < 21) {
             setTheme("sunset");
         } else if (hour <= 6 || hour >= 21) {
@@ -39,7 +38,8 @@ export const WeatherWidget = ({ apiUrl = WEATHER_URL, refreshInterval = 1 * 60 *
             data.lastFetch = new Date().toLocaleTimeString()
             const {sunrise, sunset} = data.forecast.forecastday[0].astro;
             setWeatherData(data);
-            handleTheme(sunrise, sunset);
+            const hour = new Date().getHours();
+            handleTheme(sunrise, sunset, hour);
             setError(null);
         } catch (e) {
             setError(e);
