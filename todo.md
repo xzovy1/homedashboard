@@ -2,16 +2,20 @@
 
 - in app notifications & discord bot for notifications.
 - stream cameras
-  - set up pi cam with pi zero.
+  - front door: pi cam with pi zero.
+  - kitchen/backdoor: linux surface pro
 
 - save recipies to meal plan and auto populate grocery list.
+- improve 'quantity' section of grocery list so that its visible when the quantity is greater than 1. consider how to assign different quantities like cups, mL, etc or if its necessary to differentiate them.
 
-- implement night mode and make background change dynamically with the day
-- implement home weather data
+- implement home weather data with 3 satellites:
+  - office
+  - bedroom
+  - living room
 
 ## Minor
 
-- wire up and display date_added_to_list and display in list item info.
+- add animations on page interactions & improve css styling
 
 ## Future
 
