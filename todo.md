@@ -16,6 +16,7 @@
 ## Minor
 
 - add animations on page interactions & improve css styling
+- improve todo widget to display top 3 priority to do items.
 
 ## Future
 
