@@ -10,6 +10,6 @@ export default defineConfig({
     setupFiles: "./tests/setup.js",
   },
   server: {
-    allowedHosts: ["dashboard.lan", "*"],
+    allowedHosts: ["dashboard.lan", "localhost:5500"],
   },
 });

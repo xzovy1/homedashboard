@@ -1,13 +1,16 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { AppContext } from './contexts/AppContext';
+import { DEFAULT_WEATHER } from './components/Weather/Weather';
+import { socket } from './socket';
+
 import './App.css'
+
 import Hero from './components/Hero';
 import Spending from './components/Spending';
 import Todo from "./components/Todo/Todo"
 import MealPlan from './components/MealPlan/MealPlan'
 import Weather from './components/Weather/Weather';
 import WidgetBar from './components/WidgetBar';
-import { DEFAULT_WEATHER } from './components/Weather/Weather';
 import Toolbox from './components/Toolbox';
 import Groceries from './components/Grocery/Groceries';
 import Calendar from "./components/Calendar"

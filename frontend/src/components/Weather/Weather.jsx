@@ -2,6 +2,7 @@ import classes from "../../assets/views/Weather.module.css";
 import { useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { LinePlot } from "./LinePlot";
+import MQTT from "./MQTT";
 
 export const WEATHER_URL = `${import.meta.env.VITE_API_URL}/externalWeather`;
 
@@ -21,7 +22,7 @@ const roundValue = (value) => Math.round(value);
 export const formatTemp = (temp) => `${roundValue(temp)}\u00B0C`;
 const Weather = () => {
 
-    const { weatherData, setWeatherData } = useContext(AppContext);
+    const { weatherData } = useContext(AppContext);
     return (
         <div>
             <h3>Weather</h3>
@@ -34,10 +35,11 @@ const Weather = () => {
                     </div>
                 </div>
                 <div className={classes.weatherCard}>
-                        {/* <strong>Inside Temperatures:</strong> */}
+                        <strong>Inside Temperature:</strong>
                     <div className={classes.temperatures}>
-                        {/* <TemperatureCard title={"Today"} data={weatherData.forecast.forecastday[0].day}/> */}
-                        {/* <TemperatureCard title={"Tomorrow"} data={weatherData.forecast.forecastday[1].day}/> */}
+                        <MQTT location={"Office"} generalTopic={'home/office/sensors'}/>
+                        <MQTT location={"Bedroom"} generalTopic={null}/>
+                        <MQTT location={"Living Room"} generalTopic={null}/>
                     </div>
                 </div>
                 <Graph title={"Temperature (\u00B0C)"} data={weatherData.forecast.forecastday[0].hour.map(({temp_c}) => Math.round(temp_c))} />
@@ -60,11 +62,12 @@ const TemperatureCard = ({title, data}) => {
 const Graph = ({title, data}) => {
     return (
         <div className={classes.weatherCard}> 
-            <div><strong>{title}</strong></div>
-            <LinePlot data={data}/>
+            <div>
+                <div><strong>{title}</strong></div>
+                <LinePlot data={data}/>
+            </div>
         </div> 
     )
-
 }
 
 
