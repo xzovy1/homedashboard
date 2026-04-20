@@ -22,7 +22,6 @@ export default function MQTT({location, generalTopic}) {
           setTemperature(payload);
         };
       }
-    
     });
     return () => socket.off('sensor-data');
   }, []);

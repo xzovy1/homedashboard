@@ -1,8 +1,8 @@
 import classes from "../../assets/views/Weather.module.css";
-import { useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { LinePlot } from "./LinePlot";
 import MQTT from "./MQTT";
+import { useState, useContext } from "react";
 
 export const WEATHER_URL = `${import.meta.env.VITE_API_URL}/externalWeather`;
 
@@ -21,8 +21,8 @@ export const DEFAULT_WEATHER = {
 const roundValue = (value) => Math.round(value);
 export const formatTemp = (temp) => `${roundValue(temp)}\u00B0C`;
 const Weather = () => {
-
-    const { weatherData } = useContext(AppContext);
+  const [sensorData, setSensorData] = useState({})
+    const {weatherData, setWeatherData} = useContext(AppContext)
     return (
         <div>
             <h3>Weather</h3>
@@ -35,11 +35,11 @@ const Weather = () => {
                     </div>
                 </div>
                 <div className={classes.weatherCard}>
-                        <strong>Inside Temperature:</strong>
+                        <strong>Inside Conditions:</strong>
                     <div className={classes.temperatures}>
-                        <MQTT location={"Office"} generalTopic={'home/office/sensors'}/>
-                        <MQTT location={"Bedroom"} generalTopic={null}/>
-                        <MQTT location={"Living Room"} generalTopic={null}/>
+                        <MQTT location={"Office"} generalTopic={'home/office/sensors'} setSensorData={setSensorData} sensorData={sensorData}/>
+                        <MQTT location={"Bedroom"} generalTopic={null} setSensorData={setSensorData} sensorData={sensorData}/>
+                        <MQTT location={"Living Room"} generalTopic={null} setSensorData={setSensorData} sensorData={sensorData}/>
                     </div>
                 </div>
                 <Graph title={"Temperature (\u00B0C)"} data={weatherData.forecast.forecastday[0].hour.map(({temp_c}) => Math.round(temp_c))} />
