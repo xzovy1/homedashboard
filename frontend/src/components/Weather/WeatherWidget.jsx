@@ -22,7 +22,6 @@ export const WeatherWidget = ({
     sunrise = formatTime(sunrise);
     // weather api uses 12 hour clock
     sunset = formatTime(sunset) + 12;
-    setTheme("midnight");
     const hour = new Date().getHours();
     if (hour >= sunrise && hour <= 11) {
       setTheme("sunrise");

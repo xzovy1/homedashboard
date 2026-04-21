@@ -47,7 +47,8 @@ function App() {
       "linear-gradient(140deg, #82C3FF 0%, #BFE2FF 50%, #E0F4FF 100%)",
     goldenHour:
       "linear-gradient(140deg, #FF9E6A 0%, #FFD07F 50%, #FEE89E 100%)",
-    sunset: "linear-gradient(140deg, #6248FF 0%, #CF5C78 50%, #FF9E75 100%)",
+    sunset:
+      "linear-gradient(218deg, rgba(255, 197, 167, 1) 0%, rgb(255 193 192) 50%, rgb(255, 241, 116) 100%)",
     midnight: "linear-gradient(180deg, #0e0252 0%, #3e1245 50%, #390722 100%)",
   };
 
