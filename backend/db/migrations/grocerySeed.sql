@@ -56,6 +56,15 @@ CREATE TABLE IF NOT EXISTS purchase_history (
     purchase_date DATE
 );
 
+CREATE TABLE IF NOT EXISTS sensor_data (
+    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    topic VARCHAR ( 100 ),
+    temperature NUMERIC (3, 1),
+    humidity NUMERIC (3, 1),
+    air_quality NUMERIC (3,1),
+    time_stamp TIMESTAMP
+)
+
 INSERT INTO stores (name)
 VALUES 
     ('homes alive'),

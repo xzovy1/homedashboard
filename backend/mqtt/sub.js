@@ -1,8 +1,8 @@
 const client = require("./mqtt");
 
 client.on("connect", () => {
-  client.subscribe("home/sensors/#", (err) => {
-    if (!err) console.log("Subscribed to sensors topic");
+  client.subscribe("home/office/*", (err) => {
+    if (!err) console.log("Subscribed to office topic");
   });
 });
 

@@ -1,19 +1,15 @@
 const client = require("./mqtt");
 const io = require("../socket");
+const { json } = require("express");
 
 client.on("connect", () => {
-  client.subscribe("home/#", (err) => {
-    if (!err) {
-      //   client.publish("presence", "Hello mqtt");
-    }
-  });
+  client.subscribe("home/#", (err) => {});
   client.on("message", (topic, message) => {
-    const payload = message.toString();
-
+    const jsonData = JSON.parse(message.toString());
+    jsonData.timestamp = new Date().toISOString();
     io.emit("sensor-data", {
       topic,
-      data: payload,
-      timestamp: new Date().toISOString(),
+      data: jsonData,
     });
   });
 });
