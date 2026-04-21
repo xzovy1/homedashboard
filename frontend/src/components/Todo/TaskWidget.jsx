@@ -31,7 +31,7 @@ export const TaskWidget = ({ setWidgetComponentName }) => {
         focusComponent(setWidgetComponentName, "To Do");
       }}
     >
-      <h4 className={widgetStyles.heading}>Todos</h4>
+      <h4 className={widgetStyles.heading}>Todos ({tasks.length})</h4>
       <hr className={widgetStyles.breakTag} />
       <Tasks tasks={tasks} />
     </div>
@@ -39,10 +39,19 @@ export const TaskWidget = ({ setWidgetComponentName }) => {
 };
 
 const Tasks = ({ tasks }) => {
+  console.log(tasks);
   if (tasks.length > 3) {
     return (
       <div>
-        <div>Total: {tasks.length}</div>
+        {tasks.map((task) => {
+          if (task.current_priority === "high") {
+            return (
+              <li style={{ fontSize: "smaller" }} key={task.id}>
+                {task.title}
+              </li>
+            );
+          }
+        })}
       </div>
     );
   }

@@ -1,7 +1,9 @@
 const pool = require("../pool");
 
 exports.getAllTasks = async () => {
-  const { rows } = await pool.query("SELECT * FROM todo_list;");
+  const { rows } = await pool.query(
+    "SELECT * FROM todo_list ORDER BY current_priority DESC",
+  );
   return rows;
 };
 
