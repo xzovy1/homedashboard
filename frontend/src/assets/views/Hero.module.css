@@ -64,6 +64,7 @@
     list-style-type: none;
     flex: 0 0 100%;
     scroll-snap-align: center;
+    overflow-y: auto;
 }
 
 .slideItem::scroll-marker {

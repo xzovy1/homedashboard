@@ -25,7 +25,6 @@ const Weather = () => {
   console.log(sensorData);
   return (
     <div>
-      <h3>Weather</h3>
       <div className={classes.weatherApp}>
         <div className={classes.weatherCard}>
           <strong>Outside Temperature:</strong>
@@ -68,8 +67,6 @@ const Weather = () => {
   );
 };
 const SensorCard = ({ title, data }) => {
-  const parsedTimestamp = new Date(data.timestamp);
-  console.log(data.timestamp);
   return (
     <div>
       <strong>{title}:</strong>
