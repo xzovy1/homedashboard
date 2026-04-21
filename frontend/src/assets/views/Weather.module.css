@@ -48,9 +48,9 @@
 .weatherApp{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 2fr;
     gap: 1em;
     padding: 10px;
+    overflow-y: auto;
 }
 
 .weatherCard{
@@ -60,13 +60,14 @@
     display: grid;
     justify-content: center;
     align-items: center;
+    height: min-content;
 }
 
 .temperatures{
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: 1fr 1fr;
-    gap: 6em;
+    gap: 2em;
     margin-bottom: 2em;
 }
 

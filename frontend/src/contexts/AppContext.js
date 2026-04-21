@@ -7,4 +7,6 @@ export const AppContext = createContext({
   setMeals: () => {},
   weatherData: {},
   setWeatherData: () => {},
+  sensorData: {},
+  setSensorData: () => {},
 });

@@ -1,15 +1,19 @@
 const express = require("express");
+const { createServer } = require("node:http");
+
 const app = express();
+//create server for socket io.
+const server = createServer(app);
+
 const cors = require("cors");
-const helmet = require("helmet");
 const path = require("path");
+
 require("dotenv").config();
 const corsOptions = {
   //Access-Control-Allow-Origin
   origin: "*",
 };
 app.use(cors(corsOptions));
-// app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.json());
@@ -67,4 +71,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-module.exports = app;
+module.exports = { app, server, corsOptions };
