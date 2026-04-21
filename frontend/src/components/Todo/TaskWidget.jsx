@@ -39,7 +39,6 @@ export const TaskWidget = ({ setWidgetComponentName }) => {
 };
 
 const Tasks = ({ tasks }) => {
-  console.log(tasks);
   if (tasks.length > 3) {
     return (
       <div>

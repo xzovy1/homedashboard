@@ -4,12 +4,12 @@ import * as d3 from "d3";
 
 export function LinePlot({
   data,
-  width = 350,
-  height = 218,
-  marginTop = 30,
+  width = 300,
+  height = 180,
+  marginTop = 10,
   marginRight = 30,
   marginBottom = 30,
-  marginLeft = 60,
+  marginLeft = 50,
 }) {
   const x = d3.scaleLinear(
     [0, data.length - 1],

@@ -24,45 +24,40 @@ const Weather = () => {
   const { sensorData, setSensorData } = useContext(AppContext);
   console.log(sensorData);
   return (
-    <div>
-      <div className={classes.weatherApp}>
-        <div className={classes.weatherCard}>
-          <strong>Outside Temperature:</strong>
-          <div className={classes.temperatures}>
-            <TemperatureCard
-              title={"Today"}
-              data={weatherData.forecast.forecastday[0].day}
-            />
-            <TemperatureCard
-              title={"Tomorrow"}
-              data={weatherData.forecast.forecastday[1].day}
-            />
-          </div>
+    <div className={classes.weatherApp}>
+      <div className={classes.weatherCard}>
+        <strong>Outside Temperature:</strong>
+        <div className={classes.temperatures}>
+          <TemperatureCard
+            title={"Today"}
+            data={weatherData.forecast.forecastday[0].day}
+          />
+          <TemperatureCard
+            title={"Tomorrow"}
+            data={weatherData.forecast.forecastday[1].day}
+          />
         </div>
-        <div className={classes.weatherCard}>
-          <strong>Inside Conditions:</strong>
-          <div className={classes.temperatures}>
-            <SensorCard title={"Office"} data={sensorData.office.data} />
-            <SensorCard title={"Bedroom"} data={sensorData.bedroom.data} />
-            <SensorCard
-              title={"Living Room"}
-              data={sensorData.livingRoom.data}
-            />
-          </div>
-        </div>
-        <Graph
-          title={"Temperature (\u00B0C)"}
-          data={weatherData.forecast.forecastday[0].hour.map(({ temp_c }) =>
-            Math.round(temp_c),
-          )}
-        />
-        <Graph
-          title={"Barometric Pressure (mb)"}
-          data={weatherData.forecast.forecastday[0].hour.map(
-            ({ pressure_mb }) => Math.round(pressure_mb),
-          )}
-        />
       </div>
+      <div className={classes.weatherCard}>
+        <strong>Inside Conditions:</strong>
+        <div className={classes.temperatures}>
+          <SensorCard title={"Office"} data={sensorData.office.data} />
+          <SensorCard title={"Bedroom"} data={sensorData.bedroom.data} />
+          <SensorCard title={"Living Room"} data={sensorData.livingRoom.data} />
+        </div>
+      </div>
+      <Graph
+        title={"Temperature (\u00B0C)"}
+        data={weatherData.forecast.forecastday[0].hour.map(({ temp_c }) =>
+          Math.round(temp_c),
+        )}
+      />
+      <Graph
+        title={"Barometric Pressure (mb)"}
+        data={weatherData.forecast.forecastday[0].hour.map(({ pressure_mb }) =>
+          Math.round(pressure_mb),
+        )}
+      />
     </div>
   );
 };
