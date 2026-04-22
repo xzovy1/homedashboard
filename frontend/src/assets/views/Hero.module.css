@@ -21,7 +21,7 @@
 .body{
     justify-self: center;
     border-radius: 1em;
-    max-height: 97%;
+    height: 90%;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -93,12 +93,9 @@
         max-height: 90%;
     }
  }
- @media screen and (max-width: 876px) {
+ @media screen and (max-width: 960px) {
     .header{
         padding-top: 0.5em;
         margin: 0;
-    }
-    .body{
-        max-height: 70%;
     }
  }
