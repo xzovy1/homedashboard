@@ -93,3 +93,12 @@
         max-height: 90%;
     }
  }
+ @media screen and (max-width: 876px) {
+    .header{
+        padding-top: 0.5em;
+        margin: 0;
+    }
+    .body{
+        max-height: 70%;
+    }
+ }
