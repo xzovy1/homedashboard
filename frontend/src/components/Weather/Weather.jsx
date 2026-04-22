@@ -2,7 +2,7 @@ import classes from "../../assets/views/Weather.module.css";
 import { AppContext } from "../../contexts/AppContext";
 import { LinePlot } from "./LinePlot";
 import { useState, useContext } from "react";
-
+import Notification from "../Notification";
 export const WEATHER_URL = `${import.meta.env.VITE_API_URL}/externalWeather`;
 
 export const DEFAULT_WEATHER = {
@@ -22,7 +22,6 @@ export const formatTemp = (temp) => `${roundValue(temp)}\u00B0C`;
 const Weather = () => {
   const { weatherData, setWeatherData } = useContext(AppContext);
   const { sensorData, setSensorData } = useContext(AppContext);
-  console.log(sensorData);
   return (
     <div className={classes.weatherApp}>
       <div className={classes.weatherCard}>
@@ -62,10 +61,17 @@ const Weather = () => {
   );
 };
 const SensorCard = ({ title, data }) => {
+  const [notification, setNotification] = useState(null);
+  // if (new Date() - data.timestamp > data.interval) {
+  //   setNotification(`${title} sensor exceeded interval`);
+  // } else {
+  //   setNotification(null);
+  // }
+
   return (
     <div>
+      {/* {notification ? <Notification message={notification} /> : null} */}
       <strong>{title}:</strong>
-      <div style={{ fontSize: "x-small" }}>{data.timestamp}</div>
       <div>Temperature: {data ? formatTemp(data.temperature) : "null"}</div>
       <div>Humidity: {data ? data.humidity : "null"}%</div>
     </div>
