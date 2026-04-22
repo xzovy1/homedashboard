@@ -23,16 +23,12 @@ export const WeatherWidget = ({
     // weather api uses 12 hour clock
     sunset = formatTime(sunset) + 12;
     const hour = new Date().getHours();
-    if (hour >= sunrise && hour <= 11) {
-      setTheme("sunrise");
-    } else if (hour > 11 && hour <= 16) {
-      setTheme("goldenhour");
-    } else if (hour >= sunset && hour < 21) {
-      setTheme("sunset");
-    } else if (hour <= 6 || hour >= 21) {
+    if (hour < sunrise && hour > sunset) {
       setTheme("midnight");
     } else {
-      setTheme("sunrise");
+      if (hour < 12) setTheme("sunrise");
+      if (hour >= 12 && hour) setTheme("middayClear");
+      if (hour > sunset - 3) setTheme("sunset");
     }
   };
   const fetchWeather = useCallback(async () => {

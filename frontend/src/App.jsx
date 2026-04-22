@@ -55,6 +55,7 @@ function App() {
   useEffect(() => {
     document.body.dataset.theme = theme;
     document.body.style.background = colorSchemes[`${theme}`];
+    console.log(theme);
   }, [theme]);
   const defaultSensor = {
     topic: "",
