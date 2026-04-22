@@ -9,7 +9,7 @@ import { WEATHER_URL } from "./Weather";
 
 export const WeatherWidget = ({
   apiUrl = WEATHER_URL,
-  refreshInterval = 1 * 60 * 60 * 1000,
+  refreshInterval = 1 * 60 * 30 * 1000,
   setWidgetComponentName,
 }) => {
   const [error, setError] = useState(null);
@@ -83,7 +83,6 @@ export const WeatherWidget = ({
       <div className={classes.currentTemp}>
         <strong>{formatTemp(weatherData.current.temp_c)}</strong>
       </div>
-      <div className={classes.updateTime}>{weatherData.lastFetch}</div>
       <div className={classes.otherData}>
         <div className={classes.feelsLike}>
           Feels like:{" "}

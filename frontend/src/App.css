@@ -47,7 +47,7 @@ body{
     grid-template-rows: 1fr auto;
     justify-content: space-between;
 }
-
+/* surface is 960x540 in full screen, 960x4?0 otherwise */
 @media screen and (min-width: 960px) {
 
   .hero{
