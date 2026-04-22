@@ -28,6 +28,9 @@
     border-radius: 50%;
     width: 105px;
     height: 105px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .heading{
