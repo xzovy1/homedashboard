@@ -29,6 +29,10 @@ body{
   grid-row: 2;
 }
 
+.app{
+  height: 100%;
+}
+
 .hero {
   background: var(--background);
   border-radius: 16px;
