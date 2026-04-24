@@ -1,15 +1,9 @@
 const client = require("./mqtt");
 const io = require("../socket");
-const { json } = require("express");
 
-client.on("connect", () => {
-  client.subscribe("home/#", (err) => {});
-  client.on("message", (topic, message) => {
-    const jsonData = JSON.parse(message.toString());
-    jsonData.timestamp = new Date().toISOString();
-    io.emit("sensor-data", {
-      topic,
-      data: jsonData,
-    });
+io.on("connection", (socket) => {
+  socket.on("device-control", (command) => {
+    // Example: send a command to a specific device
+    client.publish(`home/commands`, JSON.stringify(command));
   });
 });

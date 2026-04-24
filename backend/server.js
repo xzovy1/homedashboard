@@ -1,5 +1,7 @@
 require("dotenv").config();
 require("./mqtt/mqtt.js");
+require("./mqtt/sub.js");
+require("./mqtt/pub.js");
 const { server } = require("./app");
 
 const PORT = process.env.PORT || 3000;

@@ -79,7 +79,9 @@ function App() {
 
     function onSensorData(value) {
       if (value.topic === "home/office/sensors")
-        setSensorData({ ...sensorData, office: value });
+        setSensorData((prev) => ({ ...prev, office: value }));
+
+      socket.auth.serverOffset = serverOffset;
     }
 
     socket.on("connect", onConnect);

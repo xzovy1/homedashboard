@@ -5,4 +5,4 @@ const URL =
     ? "http://localhost:5500"
     : undefined;
 
-export const socket = io(URL);
+export const socket = io(URL, { auth: { serverOffset: 0 } });
