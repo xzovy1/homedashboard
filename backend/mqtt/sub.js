@@ -19,21 +19,17 @@ client.on("message", async (topic, message) => {
        VALUES ($1, $2, $3, $4) RETURNING id`,
       [topic, temperature, humidity, air_quality],
     );
-
     const serverOffset = result.rows[0].id;
-
+    console.log(result.rows[0]);
+    const data = {
+      topic,
+      temperature,
+      humidity,
+      air_quality,
+      time_stamp: new Date(),
+    };
     // Broadcast to everyone with the offset
-    io.emit(
-      "sensor-data",
-      {
-        topic,
-        temperature,
-        humidity,
-        air_quality,
-        time_stamp: new Date(),
-      },
-      serverOffset,
-    );
+    io.emit("sensor-data", data, serverOffset);
   } catch (error) {
     console.error("MQTT Processing Error:", error);
   }

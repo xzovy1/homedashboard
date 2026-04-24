@@ -59,7 +59,9 @@ function App() {
   }, [theme]);
   const defaultSensor = {
     topic: "",
-    data: { temperature: "null", humidity: "null", timestamp: null },
+    temperature: "null",
+    humidity: "null",
+    timestamp: null,
   };
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [sensorData, setSensorData] = useState({
@@ -71,16 +73,18 @@ function App() {
   useEffect(() => {
     function onConnect() {
       setIsConnected(true);
+      console.log("socket connected");
     }
 
     function onDisconnect() {
       setIsConnected(false);
+      console.log("socket disconnected");
     }
 
     function onSensorData(value, serverOffset) {
-      if (value.topic === "home/office/sensors")
+      if (value.topic === "home/office/sensors") {
         setSensorData((prev) => ({ ...prev, office: value }));
-
+      }
       socket.auth.serverOffset = serverOffset;
     }
 

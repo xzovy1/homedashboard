@@ -39,9 +39,9 @@ const Weather = () => {
       <div className={classes.weatherCard}>
         <strong>Inside Conditions:</strong>
         <div className={classes.temperatures}>
-          <SensorCard title={"Office"} data={sensorData.office.data} />
-          <SensorCard title={"Bedroom"} data={sensorData.bedroom.data} />
-          <SensorCard title={"Living Room"} data={sensorData.livingRoom.data} />
+          <SensorCard title={"Office"} data={sensorData.office} />
+          <SensorCard title={"Bedroom"} data={sensorData.bedroom} />
+          <SensorCard title={"Living Room"} data={sensorData.livingRoom} />
         </div>
       </div>
       <Graph
