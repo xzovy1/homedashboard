@@ -77,7 +77,7 @@ function App() {
       setIsConnected(false);
     }
 
-    function onSensorData(value) {
+    function onSensorData(value, serverOffset) {
       if (value.topic === "home/office/sensors")
         setSensorData((prev) => ({ ...prev, office: value }));
 
