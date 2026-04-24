@@ -20,7 +20,6 @@ client.on("message", async (topic, message) => {
       [topic, temperature, humidity, air_quality],
     );
     const serverOffset = result.rows[0].id;
-    console.log(result.rows[0]);
     const data = {
       topic,
       temperature,
