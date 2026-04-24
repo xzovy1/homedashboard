@@ -19,6 +19,7 @@ import { ConnectionState } from "./components/Socket/ConnectionState";
 import { ConnectionManager } from "./components/Socket/ConnectionManager";
 import { Events } from "./components/Socket/Events";
 import { Form } from "./components/Socket/Form";
+import Time from "./components/Time";
 
 function App() {
   //use component references which maps component names to their function references.
@@ -128,6 +129,7 @@ function App() {
         setTheme,
       }}
     >
+      <Time />
       <WidgetBar
         widgetBarStatus={widgetBarStatus}
         setWidgetBar={setWidgetBar}
