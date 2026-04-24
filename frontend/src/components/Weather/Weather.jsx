@@ -42,6 +42,10 @@ const Weather = () => {
           <SensorCard title={"Office"} data={sensorData.office} />
           <SensorCard title={"Bedroom"} data={sensorData.bedroom} />
           <SensorCard title={"Living Room"} data={sensorData.livingRoom} />
+          <div>
+            <strong>Air Quality:</strong>
+            <div>"null"ppm</div>
+          </div>
         </div>
       </div>
       <Graph

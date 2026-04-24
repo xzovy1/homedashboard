@@ -51,6 +51,22 @@ body{
     grid-template-rows: 1fr auto;
     justify-content: space-between;
 }
+
+.notificationBadge{
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  position: absolute;
+  right: -6%;
+  top: -6%;
+}
+
 /* surface is 960x540 in full screen, 960x4?0 otherwise */
 @media screen and (min-width: 960px) {
 

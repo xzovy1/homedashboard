@@ -1,10 +1,5 @@
 const Sensors = () => {
-
-    return(
-        <>
-            
-        </>
-    )
-}
+  return <></>;
+};
 
 export default Sensors;

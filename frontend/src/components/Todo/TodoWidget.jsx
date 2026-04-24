@@ -2,10 +2,10 @@ import widgetStyles from "../../assets/views/Widget.module.css";
 import { useEffect, useState, useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
 import { focusComponent } from "../../utils/focusComponent";
-
+import { NotificationBadge } from "../Notification";
 import { URL } from "./Todo";
 
-export const TaskWidget = ({ setWidgetComponentName }) => {
+export const TodoWidget = ({ setWidgetComponentName }) => {
   const { tasks, setTasks } = useContext(AppContext);
   const [error, setError] = useState(null);
 
@@ -31,7 +31,10 @@ export const TaskWidget = ({ setWidgetComponentName }) => {
         focusComponent(setWidgetComponentName, "To Do");
       }}
     >
-      <h4 className={widgetStyles.heading}>Todos ({tasks.length})</h4>
+      <div className={widgetStyles.heading}>
+        <strong>Todos </strong>
+        {tasks.length > 0 ? <NotificationBadge val={tasks.length} /> : null}
+      </div>
       <hr className={widgetStyles.breakTag} />
       <Tasks tasks={tasks} />
     </div>
