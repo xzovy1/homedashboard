@@ -6,6 +6,12 @@ client.on("connect", () => {
   client.subscribe("home/office/#", (err) => {
     if (!err) console.log("Subscribed to office topic");
   });
+  client.subscribe("home/bedroom/#", (err) => {
+    if (!err) console.log("Subscribed to bedroom topic");
+  });
+  client.subscribe("home/living-room/#", (err) => {
+    if (!err) console.log("Subscribed to living room topic");
+  });
 });
 
 client.on("message", async (topic, message) => {
