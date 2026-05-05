@@ -23,7 +23,6 @@ export const TodoWidget = ({ setWidgetComponentName }) => {
       })
       .catch((error) => setError(error));
   }, []);
-
   return (
     <div
       className={`${widgetStyles.widget} ${widgetStyles.box}`}
@@ -33,7 +32,14 @@ export const TodoWidget = ({ setWidgetComponentName }) => {
     >
       <div className={widgetStyles.heading}>
         <strong>Todos </strong>
-        {tasks.length > 0 ? <NotificationBadge val={tasks.length} /> : null}
+        {tasks.length > 0 ? (
+          // display the number of high priority tasks
+          <NotificationBadge
+            val={
+              tasks.filter((task) => task.current_priority === "high").length
+            }
+          />
+        ) : null}
       </div>
       <hr className={widgetStyles.breakTag} />
       <Tasks tasks={tasks} />
