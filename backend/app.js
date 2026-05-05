@@ -31,6 +31,21 @@ app.get("/api/externalWeather", async (req, res) => {
   res.json(response);
 });
 
+app.get("/api/wifi-credentials/:name", (req, res, next) => {
+  const options = {
+    root: path.join(__dirname, "uploads"),
+  };
+
+  const filename = req.params.name;
+  console.log(filename);
+  res.sendFile(filename, options, (err) => {
+    if (err) {
+      console.log(err);
+      next(err);
+    } else console.log("Sent:", filename);
+  });
+});
+
 const groceryRouter = require("./routes/groceryRouter");
 app.use("/api/groceries", groceryRouter);
 
