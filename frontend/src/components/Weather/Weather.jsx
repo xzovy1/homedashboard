@@ -67,7 +67,7 @@ const SensorCard = ({ title, data }) => {
   return (
     <div>
       <strong>{title}:</strong>
-      <div>Temperature: {data ? formatTemp(data.temperature) : "null"}</div>
+      <div>Temperature: {data ? data.temperature + "\u00B0C" : "null"}</div>
       <div>Humidity: {data ? data.humidity : "null"}%</div>
     </div>
   );
