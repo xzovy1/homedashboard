@@ -19,7 +19,7 @@ client.on("message", async (topic, message) => {
     const payload = JSON.parse(message.toString());
     const { temperature, humidity, air_quality } = payload;
     //format temp data since it being coerced to have trailing decimal places
-    const formattedTemperature = temperature.toFixed(2);
+    const formattedTemperature = parseFloat(temperature);
     // Save to DB and get the unique ID (the offset)
     const result = await pool.query(
       `INSERT INTO sensor_data (topic, temperature, humidity, air_quality) 
