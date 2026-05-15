@@ -78,9 +78,6 @@ void setup() {
   pinMode(yellowPin, OUTPUT);
   readLedState();
 
-  Serial.println(WIFI_SSID);
-  Serial.println(WIFI_PASS);
-  Serial.println(BROKER_IP);
   //add delay for starting leds to display.
   delay(2000);
   //read DHT before connecting to wifi.
@@ -173,16 +170,16 @@ void readLedState (){
 void readFaults(){
   
   if(humFault || tempFault){
-     ledState = SENSOR_FAULT;
+    ledState = SENSOR_FAULT;
   }else if(!client.isConnected()){
-     ledState = NETWORK_FAULT;
+    Serial.println("Network fault")
+    ledState = NETWORK_FAULT;
   }else{
     ledState = OPERATIONAL;
   }
 
 }
-void onConnectionEstablished()
-{
+void onConnectionEstablished(){
   readDht();
   delay(1000);
   client.publish(topic, JSON.stringify(sensorData));
