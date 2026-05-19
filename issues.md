@@ -12,3 +12,6 @@
     - put ESP to sleep when not sending data.
     - disconnect from wifi to reduce power usage.
     - make enclosure larger and with maximum venting.
+      - helped but didn't remove the heating issue enough.
+    - wire dht to gpio pin and turn pin off when not in use rather than wired directly to 3v3.
+    - implement ESPNOW to communicate between esp devices.
