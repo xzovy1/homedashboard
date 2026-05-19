@@ -60,8 +60,8 @@ function App() {
   }, [theme]);
   const defaultSensor = {
     topic: "",
-    temperature: "null",
-    humidity: "null",
+    temperature: null,
+    humidity: null,
     timestamp: null,
   };
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -83,8 +83,14 @@ function App() {
     }
 
     function onSensorData(value, serverOffset) {
-      if (value.topic === "home/office/sensors") {
+      if (value.topic.includes("home/office/sensors")) {
         setSensorData((prev) => ({ ...prev, office: value }));
+      }
+      if (value.topic.includes("home/bedroom/sensors")) {
+        setSensorData((prev) => ({ ...prev, bedroom: value }));
+      }
+      if (value.topic.includes("home/living-room/sensors")) {
+        setSensorData((prev) => ({ ...prev, livingRoom: value }));
       }
       socket.auth.serverOffset = serverOffset;
     }

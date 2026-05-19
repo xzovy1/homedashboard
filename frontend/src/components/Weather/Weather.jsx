@@ -44,7 +44,9 @@ const Weather = () => {
           <SensorCard title={"Living Room"} data={sensorData.livingRoom} />
           <div>
             <strong>Air Quality:</strong>
-            <div>"null"ppm</div>
+            <div>
+              <i>offline</i>
+            </div>
           </div>
         </div>
       </div>
@@ -67,8 +69,13 @@ const SensorCard = ({ title, data }) => {
   return (
     <div>
       <strong>{title}:</strong>
-      <div>Temperature: {data ? data.temperature + "\u00B0C" : "null"}</div>
-      <div>Humidity: {data ? data.humidity : "null"}%</div>
+      <div>
+        Temperature:{" "}
+        {data.temperature ? data.temperature + "\u00B0C" : <i>offline</i>}
+      </div>
+      <div>
+        Humidity: {data.humidity ? `${data.humidity}%` : <i>offline</i>}
+      </div>
     </div>
   );
 };

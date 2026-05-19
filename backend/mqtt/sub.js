@@ -16,7 +16,25 @@ client.on("connect", () => {
 
 client.on("message", async (topic, message) => {
   try {
+    if (topic.includes("lastwill")) {
+      console.log(topic, message.toString());
+      const result = await pool.query(
+        `INSERT INTO sensor_data (topic, temperature, humidity, air_quality) 
+        VALUES ($1, $2, $3, $4) RETURNING id`,
+        [topic, null, null, null],
+      );
+      const data = {
+        topic,
+        temperature: null,
+        humidity: null,
+        air_quality: null,
+        time_stamp: new Date(),
+      };
+      io.emit("sensor-data", data);
+      return;
+    }
     const payload = JSON.parse(message.toString());
+    console.log("payload", payload);
     const { temperature, humidity, air_quality } = payload;
     //format temp data to have 1 decimal place.
     const formattedTemperature = temperature.toFixed(1);
