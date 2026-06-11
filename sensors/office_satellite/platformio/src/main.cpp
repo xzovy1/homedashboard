@@ -98,6 +98,7 @@ void setup() {
     Serial.println(payload);
     
     client.publish(topic, payload.c_str());
+    client.disconnect();
     digitalWrite(orangeLed, LOW);
   }
 
