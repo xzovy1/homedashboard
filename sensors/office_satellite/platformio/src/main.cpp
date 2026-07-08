@@ -65,7 +65,7 @@ void setup() {
   
   Serial.println("\nWiFi Connected.");
 
-  // 2. Configure MQTT and Connect
+  // Configure & Connect MQTT
   client.setServer(BROKER_IP, MQTT_PORT);
   Serial.print("Connecting to MQTT Broker...");
   
@@ -81,7 +81,7 @@ void setup() {
     espSleep();
   }
 
-  // 3. Read Sensor (Takes about 250 milliseconds)
+  // Read Sensor 
   float humidity = dht.readHumidity();
   float temperature = dht.readTemperature();
 
@@ -90,14 +90,14 @@ void setup() {
     //turn on orange led on sensor fail.
     digitalWrite(orangeLed, HIGH);
   } else {
-    // 4. Publish Payload to MQTT
+    // Publish Payload to MQTT
     String payload = "{\"temperature\":" + String(temperature, 2) + 
                      ",\"humidity\":" + String(humidity, 2) + "}";
     
     Serial.print("Publishing payload: ");
     Serial.println(payload);
-    
-    client.publish(topic, payload.c_str());
+    //cast payload string to uint8 to read the payload length
+    client.publish(topic, (const uint8_t*)payload.c_str(), payload.length(), true);
     client.disconnect();
     digitalWrite(orangeLed, LOW);
   }
@@ -105,7 +105,7 @@ void setup() {
   // Small delay to ensure MQTT buffer
   delay(500); 
   
-  // 5. Start Deep Sleep
+  // Start Deep Sleep
   espSleep();
 }
 
