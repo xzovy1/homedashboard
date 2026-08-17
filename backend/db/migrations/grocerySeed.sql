@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS cart_items (
     item_id INTEGER REFERENCES items(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS item_history (
+CREATE TABLE IF NOT EXISTS item_data (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     item_id INTEGER REFERENCES items(id) ON DELETE CASCADE UNIQUE,
     total_spent INTEGER,
@@ -56,14 +56,6 @@ CREATE TABLE IF NOT EXISTS purchase_history (
     purchase_date DATE
 );
 
-CREATE TABLE IF NOT EXISTS sensor_data (
-    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    topic VARCHAR ( 100 ),
-    temperature NUMERIC (3, 1),
-    humidity NUMERIC (3, 1),
-    air_quality NUMERIC (3,1),
-    time_stamp TIMESTAMP
-)
 
 INSERT INTO stores (name)
 VALUES 

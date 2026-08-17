@@ -36,7 +36,7 @@ exports.createItem = async (
         RETURNING *
       ),
       inserted_history AS (
-        INSERT INTO item_history (item_id, times_purchased, last_purchase) 
+        INSERT INTO item_data (item_id, times_purchased, last_purchase) 
         SELECT id, 0, NULL FROM inserted_item
       )
       SELECT ii.name, ii.id, c.name AS category_name, c.id AS category_id, price_estimate, details, quantity
@@ -159,22 +159,22 @@ exports.getCartItems = async () => {
 exports.checkoutItems = async () => {
   await pool.query("BEGIN");
   try {
-    // Update item_history in a single query: increment quantity by the count of each item in cart_items
+    // Update item_data in a single query: increment quantity by the count of each item in cart_items
     await pool.query(`
       WITH
-      cte_item_history AS (
-        UPDATE item_history
-        SET times_purchased = item_history.times_purchased + sub.count, last_purchase = NOW()
+      cte_item_data AS (
+        UPDATE item_data
+        SET times_purchased = item_data.times_purchased + sub.count, last_purchase = NOW()
         FROM (
           SELECT cart_items.item_id, COUNT(*) AS count
           FROM cart_items
           GROUP BY cart_items.item_id
           ) AS sub
-          WHERE item_history.item_id = sub.item_id
-          RETURNING item_history.item_id
+          WHERE item_data.item_id = sub.item_id
+          RETURNING item_data.item_id
         ),
         cte_purchase_history AS (
-          INSERT INTO purchase_history (item_id, purchase_date) SELECT cte_item_history.item_id, NOW() FROM cte_item_history
+          INSERT INTO purchase_history (item_id, purchase_date) SELECT cte_item_data.item_id, NOW() FROM cte_item_data
         ),
         cte_remove_unsaved AS (
             DELETE FROM items 
