@@ -93,7 +93,6 @@ groceryController.addToCart = async (req, res) => {
   const { itemId } = req.params;
   if (!itemId) throw new Error.CustomNotFoundError("Malformed Request");
   const item = await db.addToCart(itemId);
-  if (!item) throw new Error.CustomNotFoundError("Item not found");
   res.status(201).json(item);
 };
 
