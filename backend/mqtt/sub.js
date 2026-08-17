@@ -18,11 +18,6 @@ client.on("message", async (topic, message) => {
   try {
     if (topic.includes("lastwill")) {
       console.log(topic, message.toString());
-      const result = await pool.query(
-        `INSERT INTO sensor_data (topic, temperature, humidity, air_quality) 
-        VALUES ($1, $2, $3, $4) RETURNING id`,
-        [topic, null, null, null],
-      );
       const data = {
         topic,
         temperature: null,
@@ -38,13 +33,6 @@ client.on("message", async (topic, message) => {
     const { temperature, humidity, air_quality } = payload;
     //format temp data to have 1 decimal place.
     const formattedTemperature = temperature.toFixed(1);
-    // Save to DB and get the unique ID (the offset)
-    const result = await pool.query(
-      `INSERT INTO sensor_data (topic, temperature, humidity, air_quality) 
-       VALUES ($1, $2, $3, $4) RETURNING id`,
-      [topic, temperature, humidity, air_quality],
-    );
-    const serverOffset = result.rows[0].id;
 
     const data = {
       topic,
@@ -55,7 +43,7 @@ client.on("message", async (topic, message) => {
     };
     console.log(data);
     // Broadcast to everyone with the offset
-    io.emit("sensor-data", data, serverOffset);
+    io.emit("sensor-data", data);
   } catch (error) {
     console.error("MQTT Processing Error:", error);
   }
