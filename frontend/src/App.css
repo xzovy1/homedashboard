@@ -32,6 +32,10 @@ body{
   height: 100%;
 }
 
+li{
+  list-style: none;
+}
+
 .hero {
   background: var(--background);
   border-radius: 16px;
