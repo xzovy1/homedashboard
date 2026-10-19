@@ -57,6 +57,7 @@ const char* willMsg = "bedroom offline";
 String payload = "";
 String clientId = "ESP32Client-Bedroom";
 bool networkError = false;
+int networkErrorCount = 0; // acts as a buffer so the display doesn't immediately display 'nErr' on an erroneous disconnection
 
 
 // function declarations
@@ -73,30 +74,34 @@ void setup(){
   delay(1000);
 
   Serial.print("Connecting to wifi");
-    WiFi.begin(WIFI_SSID, WIFI_PASS);
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        Serial.print(".");
-    }
-    Serial.println(" CONNECTED");
+  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  int attempts = 0;
+  while (WiFi.status() != WL_CONNECTED && attempts < 40) {
+    attempts++;
+    delay(1000);
+    Serial.print(".");
+  }
+  Serial.println(" CONNECTED");
 
-    //Init & sync time from NTP server.
-    configTime(gmtOffset_sec, daylightOffset_sec, ntpServer1, ntpServer2);
-    Serial.println("Waiting for NTP time sync...");
+  //Init & sync time from NTP server.
+  configTime(gmtOffset_sec, daylightOffset_sec, ntpServer1, ntpServer2);
+  Serial.println("Waiting for NTP time sync...");
 
-    // set rtc with ntp
-    if (getLocalTime(&timeinfo)){
-      rtc.setTimeStruct(timeinfo); 
-    }
+  // set rtc with ntp
+  if (getLocalTime(&timeinfo)){
+    rtc.setTimeStruct(timeinfo); 
+  }
 
-    // Configure & connect MQTT
-    client.setServer(BROKER_IP, MQTT_PORT);
-    client.connect(clientId.c_str(), willTopic, 1, true, willMsg);
-    
-    delay(2000);
-    if(readDht() && reconnectMQTT()){
-      publishMQTT();
-    }
+  delay(2000);
+  // Configure & connect MQTT
+  client.setServer(BROKER_IP, MQTT_PORT);
+  if(client.connect(clientId.c_str(), willTopic, 1, true, willMsg)){
+    client.publish(willTopic, "bedroom online", true);
+  }
+  delay(2000);
+  if(readDht() && reconnectMQTT()){
+    publishMQTT();
+  }
 }
 
 void loop(){
@@ -104,15 +109,24 @@ void loop(){
   unsigned long currentMillis = millis();
 
   //maintain MQTT connection with broker
-  if(((currentMillis - lastReconnectAttempt) >= 5000)){
+  if(((currentMillis - lastReconnectAttempt) >= 60000)){
     lastReconnectAttempt = currentMillis;
-    if(!client.connected()){
-      networkError = true;
+    if(!client.connected() && networkErrorCount < 5){ // dont increment past 5 incase the network is down for an extended period of time.
+      networkErrorCount++;
       reconnectMQTT();
-      }else{
-        networkError = false;
+    }else if(networkErrorCount > 0){
+      networkErrorCount--;
     }
+    Serial.println(networkErrorCount);
   }
+  //on 5 consecutive failed reconnect attempts, set network error to true.
+  if(networkErrorCount >= 5){
+    networkError = true;
+  }else{
+    networkError = false;
+  }
+
+
   client.loop();
 
   //publish MQTT every 15 min
@@ -133,11 +147,24 @@ void loop(){
     readDht();
   }
 
-  //set display brightness
-  if(analogRead(PHOTO_PIN) < 1300){
+  //set display brightness 0-7. Photoresistor values from 0 to ~4000
+  int illuminance = analogRead(PHOTO_PIN);
+  if(illuminance < 571){
     module.setupDisplay(true, 0);
-  }else{
+  }else if(illuminance < (571 * 2) && illuminance >= (571)){
+    module.setupDisplay(true, 1);
+  }else if(illuminance < (571 * 3) && illuminance >= (571 * 2)){
     module.setupDisplay(true, 2);
+  }else if(illuminance < (571 * 4)&& illuminance >= (571 * 3)){
+    module.setupDisplay(true, 3);
+  }else if(illuminance < (571 * 5)&& illuminance >= (571 * 4)){
+    module.setupDisplay(true, 4);
+  }else if(illuminance < (571 * 6)&& illuminance >= (571 * 5)){
+    module.setupDisplay(true, 5);
+  }else if(illuminance < (571 * 7)&& illuminance >= (571 * 6)){
+    module.setupDisplay(true, 6);
+  }else if(illuminance < (571 * 8)&& illuminance >= (571 * 7)){
+    module.setupDisplay(true, 7);
   }
   
   //set rtc with ntp
@@ -201,9 +228,9 @@ bool publishMQTT(){
   
 
 bool reconnectMQTT(){
-    Serial.println("connected");
-    client.publish(willTopic, "bedroom online", true);
+  if(client.connect(clientId.c_str(), willTopic, 1, true, willMsg)){
     return true;
+  }
   Serial.print(client.state());
   return false;
 }
