@@ -25,20 +25,25 @@ unsigned long rtcTimer = 0;
 const unsigned long rtcInterval = 1000 * 60 * 60;
 struct tm timeinfo;
 
-
 //TM1640 LED driver
 TM1640 module(22, 23, 4);  // data, clock, 4 digits
 unsigned long ledTimer = 0;
 const unsigned long ledInterval = 5000;
+
+//time & blink
+int nTime = -1;
 unsigned long blinkTimer = 0;
 const unsigned long blinkInterval = 1000;
+static bool blink = false;
 
 //photoresistor
 #define PHOTO_PIN 34
+unsigned long brightnessTimer = 0;
+const unsigned long brightnessInterval = 2200;
 
 // DHT22
 #define DHTTYPE DHT22
-#define DHT_PIN 21
+#define DHT_PIN 13
 DHT dht(DHT_PIN, DHTTYPE);
 unsigned long dhtTimer = 0;
 const unsigned long dhtInterval = 1000 * 60;
@@ -86,6 +91,7 @@ void setup(){
   //Init & sync time from NTP server.
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer1, ntpServer2);
   Serial.println("Waiting for NTP time sync...");
+  module.setDisplayToString("SYNC");
 
   // set rtc with ntp
   if (getLocalTime(&timeinfo)){
@@ -107,7 +113,7 @@ void setup(){
 void loop(){
   
   unsigned long currentMillis = millis();
-
+  
   //maintain MQTT connection with broker
   if(((currentMillis - lastReconnectAttempt) >= 60000)){
     lastReconnectAttempt = currentMillis;
@@ -147,24 +153,30 @@ void loop(){
     readDht();
   }
 
-  //set display brightness 0-7. Photoresistor values from 0 to ~4000
-  int illuminance = analogRead(PHOTO_PIN);
-  if(illuminance < 571){
-    module.setupDisplay(true, 0);
-  }else if(illuminance < (571 * 2) && illuminance >= (571)){
-    module.setupDisplay(true, 1);
-  }else if(illuminance < (571 * 3) && illuminance >= (571 * 2)){
-    module.setupDisplay(true, 2);
-  }else if(illuminance < (571 * 4)&& illuminance >= (571 * 3)){
-    module.setupDisplay(true, 3);
-  }else if(illuminance < (571 * 5)&& illuminance >= (571 * 4)){
-    module.setupDisplay(true, 4);
-  }else if(illuminance < (571 * 6)&& illuminance >= (571 * 5)){
-    module.setupDisplay(true, 5);
-  }else if(illuminance < (571 * 7)&& illuminance >= (571 * 6)){
-    module.setupDisplay(true, 6);
-  }else if(illuminance < (571 * 8)&& illuminance >= (571 * 7)){
-    module.setupDisplay(true, 7);
+  if(((currentMillis - brightnessTimer) >= brightnessInterval)){
+    brightnessTimer = currentMillis;
+    //set display brightness 0-7. Photoresistor values from 0 to ~4000 but practically less than 4000.
+    int illuminance = analogRead(PHOTO_PIN);
+    // Serial.print("Illuminance: ");
+    // Serial.println(illuminance);
+    int val = 450;
+    if(illuminance < val){
+      module.setupDisplay(true, 0);
+    }else if(illuminance < (val * 2) && illuminance >= (val)){
+      module.setupDisplay(true, 1);
+    }else if(illuminance < (val * 3) && illuminance >= (val * 2)){
+      module.setupDisplay(true, 2);
+    }else if(illuminance < (val * 4)&& illuminance >= (val * 3)){
+      module.setupDisplay(true, 3);
+    }else if(illuminance < (val * 5)&& illuminance >= (val * 4)){
+      module.setupDisplay(true, 4);
+    }else if(illuminance < (val * 6)&& illuminance >= (val * 5)){
+      module.setupDisplay(true, 5);
+    }else if(illuminance < (val * 7)&& illuminance >= (val * 6)){
+      module.setupDisplay(true, 6);
+    }else if(illuminance < (val * 8)&& illuminance >= (val * 7)){
+      module.setupDisplay(true, 7);
+    }
   }
   
   //set rtc with ntp
@@ -174,25 +186,23 @@ void loop(){
       rtc.setTimeStruct(timeinfo); 
     }
   }
-
-  int nTime = ((rtc.getHour(true))) * 100 + (rtc.getMinute());
-
-  static bool blink = false;
+  
   // blink colon;
-  if(blink){
-    module.setDisplayToDecNumber(nTime, 0xFF);
-  }else{
-    if(sensorError){
-      module.setDisplayToString("sErr");
-    }else if(networkError){
-      module.setDisplayToString("nErr");
-    }else{
-      module.setDisplayToDecNumber(nTime, _BV(4));
-    }
-  }
   if(((currentMillis - blinkTimer) >= blinkInterval)){
-    blinkTimer = currentMillis;
-    blink = !blink;
+    nTime = ((rtc.getHour(true))) * 100 + (rtc.getMinute());
+      if(blink){
+        module.setDisplayToDecNumber(nTime, 0xFF);
+      }else if(!blink){
+        if(sensorError){
+          module.setDisplayToString("sErr");
+        }else if(networkError){
+          module.setDisplayToString("nErr");
+        }else{
+          module.setDisplayToDecNumber(nTime, _BV(4));
+        }
+      }
+      blinkTimer = currentMillis;
+      blink = !blink;
   }
 }
 
