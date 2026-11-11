@@ -2,6 +2,28 @@ const client = require("./mqtt");
 const io = require("../socket");
 const pool = require("../db/pool.js");
 
+async function sendDiscordWebhook(str = "this is a test"){
+  console.log(str)
+  const message = JSON.stringify({"content": str})
+  try{
+    const response = await fetch(process.env.DISCORD_WEBHOOK, {method: "POST", headers: {
+      'Content-Type': 'application/json'
+    }, body: message})
+
+    if(!response.ok){
+      console.log(response)
+      throw new Error(response.status)
+    }
+    
+  }catch(err){
+    console.error(err);
+  }
+}
+
+let alarmCondition = false;
+const highTempAlarm = 24;
+const lowTempAlarm = 17;
+
 client.on("connect", () => {
   client.subscribe("home/office/#", (err) => {
     if (!err) console.log("Subscribed to office topic");
@@ -36,12 +58,20 @@ client.on("message", async (topic, message) => {
 
     const data = {
       topic,
-      temperature: formattedTemperature,
+      temperature: parseFloat(formattedTemperature),
       humidity,
       air_quality,
-      time_stamp: new Date(),
+      timestamp: new Date(),
     };
-    console.log(data);
+    // temp is at alarm levels send discord message if alarmCondition hasn't previously been triggered
+    if(temperature >= highTempAlarm || temperature <= lowTempAlarm){
+      if(!alarmCondition){
+        sendDiscordWebhook(`Heads up! ${data.topic.split('/')[1]} temperature is ${temperature}`)
+      }
+      alarmCondition = true;
+    }else if(temperature < highTempAlarm || temperature > lowTempAlarm){
+      alarmCondition = false;
+    }
     // Broadcast to everyone with the offset
     io.emit("sensor-data", data);
   } catch (error) {
