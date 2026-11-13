@@ -19,8 +19,8 @@ async function sendDiscordWebhook(str = "this is a test"){
     console.error(err);
   }
 }
-
-let alarmCondition = false;
+//bool value to ensure notification isn't being spammed every 15 minutes.
+let alarmNotificationSent = false;
 const highTempAlarm = 24;
 const lowTempAlarm = 17;
 
@@ -65,12 +65,14 @@ client.on("message", async (topic, message) => {
     };
     // temp is at alarm levels send discord message if alarmCondition hasn't previously been triggered
     if(temperature >= highTempAlarm || temperature <= lowTempAlarm){
-      if(!alarmCondition){
-        sendDiscordWebhook(`Heads up! ${data.topic.split('/')[1]} temperature is ${temperature}`)
+      if(!alarmNotificationSent){
+        // mqtt: home/<room>/sensors
+        const location = data.topic.split('/')[1]
+        sendDiscordWebhook(`Heads up! ${location} temperature is ${temperature}`)
       }
-      alarmCondition = true;
-    }else if(temperature < highTempAlarm || temperature > lowTempAlarm){
-      alarmCondition = false;
+      alarmNotificationSent = true;
+    }else{
+      alarmNotificationSent = false;
     }
     // Broadcast to everyone with the offset
     io.emit("sensor-data", data);
