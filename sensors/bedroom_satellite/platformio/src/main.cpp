@@ -10,8 +10,8 @@
 #include "secrets.h"
 #include <ESP32Time.h>
 
-// GMT -7 = -7 * 3600 = -25200
-const long  gmtOffset_sec = -25200;
+// GMT -6 = -6 * 3600 = -gmtOffset_sec
+const long  gmtOffset_sec = -21600;
 const int   daylightOffset_sec = 3600;
 
 //ntp
